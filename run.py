@@ -65,31 +65,13 @@ HANGMAN = ["""
 """
 Creates a list of words and randomly pick and return one of them to play with.
 """
+
+
 def get_word():
+    words = "duck water sweater coding orange facebook computer".split(" ")
+    number = random.randint(0, len(words) -1)
+    word = list(words[number])
+    return word
 
 
-"""
-Lets the user make a guess and check if it is valid.
-"""
-def get_guess():
-
-
-"""
-Checks if the guess was correct or not.
-"""
-def validate_guess():
-
-
-"""
-Calculate how many tries wich decides wich "image" of the hangman should be displayed.
-"""
-def collect_tries():
-
-
-"""
-Congratulates when game is completed and asks if the user wants to play again.
-"""
-def win_game():
-
-
-def main():
+get_word()
