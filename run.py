@@ -89,22 +89,25 @@ def get_guess(word, hidden_letters, tries):
     """
     Lets the user make a guess and validate it.
     """
-    print(HANGMAN[tries])
-    print((''.join(hidden_letters)))
-    print("\n")
+    print(HANGMAN[len(tries)])
+    print((' '.join(hidden_letters)) + "\n")
+    print(len(tries))
+    if len(tries) > 0:
+        print("guessed: " + (', '.join(tries)) + "\n")
     while True:
-        guess = input("Please make a guess: \n")
+        guess = input("Please make a guess: ")
+        print("\n")
         if validate_guess(guess, word, hidden_letters):
             break
     guess = list(guess)
     if guess == word:
         end_game(WIN)
     elif len(guess) > 1 and guess != word:
-        collect_tries(tries, word, hidden_letters)
+        collect_tries(tries, word, hidden_letters, guess)
     elif guess[0] in word:
         add_letter(guess, word, hidden_letters, tries)
     else:
-        collect_tries(tries, word, hidden_letters)
+        collect_tries(tries, word, hidden_letters, guess)
 
 
 def validate_guess(guess, word, hidden_letters):
@@ -149,14 +152,15 @@ def add_letter(guess, word, hidden_word, tries):
         end_game(WIN)
 
 
-def collect_tries(tries, word, hidden_letters):
+def collect_tries(tries, word, hidden_letters, guess):
     """
     Calculate how many tries wich decides wich "image"
     of the hangman should be displayed.
     """
     print("Oops bad guess...\n")
-    tries += 1
-    if tries == 7:
+    tries.append(guess[0])
+    print(tries)
+    if len(tries) == 7:
         end_game(LOOSE)
     else:
         get_guess(word, hidden_letters, tries)
@@ -189,7 +193,7 @@ def main():
     """
     main function.
     """
-    tries = 0
+    tries = []
     word, hidden_word = get_word()
     get_guess(word, hidden_word, tries)
 
