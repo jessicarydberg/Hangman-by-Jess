@@ -70,14 +70,29 @@ def get_word():
     Creates a list of words and randomly pick and return one
     of them to play with.
     """
-    words = "duck water sweater coding orange facebook computer"\
-        "hangman monkey table apple pizza game workout".split(" ")
-    print(words)
+    print("\n")
+    print("Welcome to the games of HangMan!\n")
+    print("You can choose between three themes: Animals, Sports or Furniture")
+    themes = ["animals", "sports", "furniture"]
+    while True:
+        theme = input("Please enter the theme you would like to play here: ")
+        if theme.lower() in themes:
+            break
+        else:
+            print(f'{theme} is not available, please try again!')
+            continue
+
+    theme = theme.lower()
+    if theme == "animals":
+        words = "duck dolphine horse lion bird mouse camel".split(" ")
+    elif theme == "sports":
+        words = "football climbing skiing iceskating running".split(" ")
+    elif theme == "furniture":
+        words = "table chair sofa bathtub wardrobe bed cabinet".split(" ")
     number = random.randint(0, len(words)-1)
     word = list(words[number])
 
     print("\n")
-    print("Welcome to the games of HangMan!\n")
     print("Can you guess wich word is hidden?")
     print("You can guess for letters or words but be carefull...")
     print("Every incorrect guess takes you closer to hanging the man...")
