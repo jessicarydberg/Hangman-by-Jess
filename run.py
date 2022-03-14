@@ -44,7 +44,7 @@ HANGMAN = ["""
         |
         |
       =====""", """
-        +---+
+    +---+
     O   |
    /|\  |
     |   |
@@ -80,7 +80,7 @@ def get_word():
     return word
 
 
-def get_guess(word):
+def get_guess(word, tries):
     """
     Lets the user make a guess and validate it.
     """
@@ -95,7 +95,7 @@ def get_guess(word):
     elif guess[0] in word:
         add_letter(guess, word)
     else:
-        collect_tries()
+        collect_tries(tries, word)
  
 
 def validate_guess(guess, word):
@@ -126,12 +126,16 @@ def add_letter(guess, word):
     print("Hey good guess!")
 
 
-def collect_tries():
+def collect_tries(tries, word):
     """
     Calculate how many tries wich decides wich "image" 
     of the hangman should be displayed.
     """
-    print("Lets hang the man!")
+    print("Oops bad guess, lets hang the man!")
+    tries += 1
+    print(HANGMAN[tries])
+    print("_" * len(word))
+    get_guess(word, tries)
 
 
 def win_game():
@@ -157,8 +161,9 @@ def main():
     main function.
     """
     while True:
+        tries = 0
         hidden_word = get_word()
-        if not get_guess(hidden_word):
+        if not get_guess(hidden_word, tries):
             break
     print("Thanks for playing!")
 
