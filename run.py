@@ -91,11 +91,11 @@ def get_guess(word, tries):
             break
     guess = list(guess)
     if guess == word:
-        return win_game()
+        return win
     elif guess[0] in word:
-        add_letter(guess, word)
+        return add_letter(guess, word)
     else:
-        collect_tries(tries, word)
+        return collect_tries(tries, word)
  
 
 def validate_guess(guess, word):
@@ -124,6 +124,10 @@ def add_letter(guess, word):
     Collects correct guesses of on letter and ads it to the hidden word.
     """
     print("Hey good guess!")
+    if hidden_word == word:
+        return win
+    else:
+        get_guess()
 
 
 def collect_tries(tries, word):
@@ -133,17 +137,24 @@ def collect_tries(tries, word):
     """
     print("Oops bad guess, lets hang the man!")
     tries += 1
+    if tries == 7:
+        return loose
     print(HANGMAN[tries])
     print("_" * len(word))
     get_guess(word, tries)
 
 
-def win_game():
+def end_game(result):
     """
     Congratulates when game is completed and asks if 
     the user wants to play again.
     """
-    print("Hey you won the game!")
+    if result == win:
+        print("Hey you won the game!")
+    elif result == loose:
+        print("...Oh no!\n")
+        print("No tries left...\n")
+        print("...you killed him!")
     while True:
         play_again = input("Want to play again? (Y/N)")
         if play_again == "Y" or play_again == "N":
@@ -151,9 +162,9 @@ def win_game():
         else:
             print("Invalid input, please insert Y for yes or N for No!")
     if play_again == "Y":
-        return True
-    else:
         return False
+    else:
+        return True
 
 
 def main():
@@ -163,7 +174,8 @@ def main():
     while True:
         tries = 0
         hidden_word = get_word()
-        if not get_guess(hidden_word, tries):
+        result = get_guess(hidden_word,tries)
+        if end_game(result):
             break
     print("Thanks for playing!")
 
