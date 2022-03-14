@@ -89,17 +89,18 @@ def get_guess(word, hidden_letters, tries):
     """
     Lets the user make a guess and validate it.
     """
-    print(word)
-    print(hidden_letters)
     print(HANGMAN[tries])
     print((''.join(hidden_letters)))
+    print("\n")
     while True:
-        guess = input("Please make a guess: ")
+        guess = input("Please make a guess: \n")
         if validate_guess(guess, word, hidden_letters):
             break
     guess = list(guess)
     if guess == word:
         end_game(WIN)
+    elif len(guess) > 1 and guess != word:
+        collect_tries(tries, word, hidden_letters)
     elif guess[0] in word:
         add_letter(guess, word, hidden_letters, tries)
     else:
@@ -135,7 +136,7 @@ def add_letter(guess, word, hidden_word, tries):
     """
     Collects correct guesses of on letter and ads it to the hidden word.
     """
-    print("Hey good guess!")
+    print("Good guess!\n")
     if hidden_word == word:
         end_game(WIN)
     else:
@@ -153,7 +154,7 @@ def collect_tries(tries, word, hidden_letters):
     Calculate how many tries wich decides wich "image"
     of the hangman should be displayed.
     """
-    print("Oops bad guess, lets hang the man!")
+    print("Oops bad guess...\n")
     tries += 1
     if tries == 7:
         end_game(LOOSE)
@@ -166,13 +167,12 @@ def end_game(result):
     Prints a message depending on if game is lost or won.
     Gives user oportunity to play again.
     """
-    print(result)
     if result == "win":
-        print("Hey you won the game!")
+        print("Hey you won the game!\n")
     elif result == "loose":
         print("...Oh no!\n")
         print("No tries left...\n")
-        print("...you killed him!")
+        print("...you killed him!\n")
     while True:
         play_again = input("Want to play again? (Y/N)")
         if play_again == "Y" or play_again == "N":
@@ -194,17 +194,4 @@ def main():
     get_guess(word, hidden_word, tries)
 
 
-def test():
-    """
-    For testing code.
-    """
-    testing = "alpha"
-    print(testing)
-    testing = list(testing)
-    print(testing)
-    testing = (''.join(testing))
-    print(testing)
-
-
 main()
-# test()
