@@ -70,7 +70,8 @@ def get_word():
     Creates a list of words and randomly pick and return one
     of them to play with.
     """
-    words = "duck water sweater coding orange facebook computer".split(" ")
+    words = """duck water sweater coding orange facebook computer
+            hangman monkey table apple pizza game workout""".split(" ")
     number = random.randint(0, len(words)-1)
     word = list(words[number])
 
@@ -141,6 +142,7 @@ def add_letter(guess, word, hidden_word, tries):
     """
     print("Good guess!\n")
     if hidden_word == word:
+        print((' '.join(hidden_word)).upper() + "\n")
         end_game(WIN)
     else:
         for i in range(len(word)):
@@ -149,6 +151,7 @@ def add_letter(guess, word, hidden_word, tries):
     if "_" in hidden_word:
         get_guess(word, hidden_word, tries)
     else:
+        print((' '.join(hidden_word)).upper() + "\n")
         end_game(WIN)
 
 
