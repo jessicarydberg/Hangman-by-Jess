@@ -74,10 +74,11 @@ def get_word():
     number = random.randint(0, len(words)-1)
     word = list(words[number])
 
+    print("\n")
     print("Welcome to the games of HangMan!\n")
     print("Can you guess wich word is hidden?")
     print("You can guess for letters or words but be carefull...")
-    print("Every incorrect guess takes you close to hanging the man...")
+    print("Every incorrect guess takes you closer to hanging the man...")
     hidden_letters = []
     blank = "_"
     while len(hidden_letters) != len(word):
@@ -90,10 +91,9 @@ def get_guess(word, hidden_letters, tries):
     Lets the user make a guess and validate it.
     """
     print(HANGMAN[len(tries)])
-    print((' '.join(hidden_letters)) + "\n")
-    print(len(tries))
+    print((' '.join(hidden_letters)).upper() + "\n")
     if len(tries) > 0:
-        print("guessed: " + (', '.join(tries)) + "\n")
+        print("Guessed: " + (', '.join(tries)).upper() + "\n")
     while True:
         guess = input("Please make a guess: ")
         print("\n")
@@ -159,7 +159,6 @@ def collect_tries(tries, word, hidden_letters, guess):
     """
     print("Oops bad guess...\n")
     tries.append(''.join(guess))
-    print(tries)
     if len(tries) == 7:
         end_game(LOOSE)
     else:
@@ -179,10 +178,11 @@ def end_game(result):
         print("...you killed him!\n")
     while True:
         play_again = input("Want to play again? (Y/N)")
+        play_again = play_again.upper()
         if play_again == "Y" or play_again == "N":
             break
         else:
-            print("Invalid input, please insert Y for yes or N for No!")
+            print("Invalid input, please insert Y for Yes or N for No!")
     if play_again == "Y":
         main()
     else:
