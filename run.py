@@ -67,8 +67,8 @@ HANGMAN = ["""
 
 def get_word():
     """
-    Creates a list of words and randomly pick and return one of 
-    them to play with.
+    Creates a list of words and randomly pick and return one
+    of them to play with.
     """
     words = "duck water sweater coding orange facebook computer".split(" ")
     number = random.randint(0, len(words)-1)
@@ -79,28 +79,32 @@ def get_word():
     print("You can guess for letters or words but be carefull...")
     print("Every incorrect guess takes you close to hanging the man...")
     print(HANGMAN[0])
-    print("_" * len(word))
-    return word
+    hidden_letters = []
+    blank = "_"
+    while len(hidden_letters) != len(word):
+        hidden_letters.append(blank)
+    print((''.join(hidden_letters)))
+    return word, hidden_letters
 
 
-def get_guess(word, tries):
+def get_guess(word, hidden_letters, tries):
     """
     Lets the user make a guess and validate it.
     """
     print(word)
+    print(hidden_letters)
+    print((''.join(hidden_letters)))
     while True:
         guess = input("Please make a guess: ")
         if validate_guess(guess, word):
             break
     guess = list(guess)
     if guess == word:
-        result = WIN
+        end_game(WIN)
     elif guess[0] in word:
-        result = add_letter(guess, word, tries)
+        add_letter(guess, word, hidden_letters, tries)
     else:
-        result = collect_tries(tries, word)
-    print(result)
-    return result
+        collect_tries(tries, word, hidden_letters)
 
 
 def validate_guess(guess, word):
@@ -123,19 +127,24 @@ def validate_guess(guess, word):
         return False
 
 
-def add_letter(guess, word, tries):
+def add_letter(guess, word, hidden_word, tries):
     """
     Collects correct guesses of on letter and ads it to the hidden word.
     """
     print("Hey good guess!")
-    hidden_word = []
     if hidden_word == word:
-        return WIN
+        end_game(WIN)
     else:
-        get_guess(word, tries)
+        for i in range(len(word)):
+            if word[i] == guess[0]:
+                hidden_word[i] = guess[0]
+    if "_" in hidden_word:
+        get_guess(word, hidden_word, tries)
+    else:
+        end_game(WIN)
 
 
-def collect_tries(tries, word):
+def collect_tries(tries, word, hidden_letters):
     """
     Calculate how many tries wich decides wich "image"
     of the hangman should be displayed.
@@ -144,11 +153,10 @@ def collect_tries(tries, word):
     tries += 1
     if tries == 7:
         print(HANGMAN[tries])
-        return LOOSE
+        end_game(LOOSE)
     else:
         print(HANGMAN[tries])
-        print("_" * len(word))
-        get_guess(word, tries)
+        get_guess(word, hidden_letters, tries)
 
 
 def end_game(result):
@@ -170,23 +178,31 @@ def end_game(result):
         else:
             print("Invalid input, please insert Y for yes or N for No!")
     if play_again == "Y":
-        return False
+        main()
     else:
-        return True
+        print("Thank you for playing!")
 
 
 def main():
     """
     main function.
     """
-    while True:
-        tries = 0
-        hidden_word = get_word()
-        result = get_guess(hidden_word, tries)
-        print(result)
-        if end_game(result):
-            break
-    print("Thanks for playing!")
+    tries = 0
+    word, hidden_word = get_word()
+    get_guess(word, hidden_word, tries)
+
+
+def test():
+    """
+    For testing code.
+    """
+    testing = "alpha"
+    print(testing)
+    testing = list(testing)
+    print(testing)
+    testing = (''.join(testing))
+    print(testing)
 
 
 main()
+# test()
