@@ -83,7 +83,6 @@ def get_word():
     blank = "_"
     while len(hidden_letters) != len(word):
         hidden_letters.append(blank)
-    print((''.join(hidden_letters)))
     return word, hidden_letters
 
 
@@ -96,7 +95,7 @@ def get_guess(word, hidden_letters, tries):
     print((''.join(hidden_letters)))
     while True:
         guess = input("Please make a guess: ")
-        if validate_guess(guess, word):
+        if validate_guess(guess, word, hidden_letters):
             break
     guess = list(guess)
     if guess == word:
@@ -107,7 +106,7 @@ def get_guess(word, hidden_letters, tries):
         collect_tries(tries, word, hidden_letters)
 
 
-def validate_guess(guess, word):
+def validate_guess(guess, word, hidden_letters):
     """
     Validates the data provided.
     """
@@ -115,7 +114,12 @@ def validate_guess(guess, word):
         if len(list(guess)) == len(word):
             return True
         elif len(list(guess)) == 1:
-            return True
+            if guess[0] in hidden_letters:
+                print(f'You already guessed for {guess}')
+                print("Please try another guess!")
+                return False
+            else:
+                return True
         else:
             print(f"Invalid data: {guess}.")
             print(f'Your guess needs to be one letter or {len(word)} letters.')
