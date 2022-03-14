@@ -78,7 +78,6 @@ def get_word():
     print("Can you guess wich word is hidden?")
     print("You can guess for letters or words but be carefull...")
     print("Every incorrect guess takes you close to hanging the man...")
-    print(HANGMAN[0])
     hidden_letters = []
     blank = "_"
     while len(hidden_letters) != len(word):
@@ -92,6 +91,7 @@ def get_guess(word, hidden_letters, tries):
     """
     print(word)
     print(hidden_letters)
+    print(HANGMAN[tries])
     print((''.join(hidden_letters)))
     while True:
         guess = input("Please make a guess: ")
@@ -156,10 +156,8 @@ def collect_tries(tries, word, hidden_letters):
     print("Oops bad guess, lets hang the man!")
     tries += 1
     if tries == 7:
-        print(HANGMAN[tries])
         end_game(LOOSE)
     else:
-        print(HANGMAN[tries])
         get_guess(word, hidden_letters, tries)
 
 
