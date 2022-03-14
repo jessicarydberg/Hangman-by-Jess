@@ -1,5 +1,8 @@
 import random
 
+WIN = "win"
+LOOSE = "loose"
+
 HANGMAN = ["""
     +---+
         |
@@ -91,19 +94,20 @@ def get_guess(word, tries):
             break
     guess = list(guess)
     if guess == word:
-        return win
+        result = WIN
     elif guess[0] in word:
-        return add_letter(guess, word)
+        result = add_letter(guess, word, tries)
     else:
-        return collect_tries(tries, word)
- 
+        result = collect_tries(tries, word)
+    print(result)
+    return result
+
 
 def validate_guess(guess, word):
     """
     Validates the data provided.
     """
     if guess.isalpha():
-        print(len(list(guess)), len(word))
         if len(list(guess)) == len(word):
             return True
         elif len(list(guess)) == 1:
@@ -119,39 +123,43 @@ def validate_guess(guess, word):
         return False
 
 
-def add_letter(guess, word):
+def add_letter(guess, word, tries):
     """
     Collects correct guesses of on letter and ads it to the hidden word.
     """
     print("Hey good guess!")
+    hidden_word = []
     if hidden_word == word:
-        return win
+        return WIN
     else:
-        get_guess()
+        get_guess(word, tries)
 
 
 def collect_tries(tries, word):
     """
-    Calculate how many tries wich decides wich "image" 
+    Calculate how many tries wich decides wich "image"
     of the hangman should be displayed.
     """
     print("Oops bad guess, lets hang the man!")
     tries += 1
     if tries == 7:
-        return loose
-    print(HANGMAN[tries])
-    print("_" * len(word))
-    get_guess(word, tries)
+        print(HANGMAN[tries])
+        return LOOSE
+    else:
+        print(HANGMAN[tries])
+        print("_" * len(word))
+        get_guess(word, tries)
 
 
 def end_game(result):
     """
-    Congratulates when game is completed and asks if 
-    the user wants to play again.
+    Prints a message depending on if game is lost or won.
+    Gives user oportunity to play again.
     """
-    if result == win:
+    print(result)
+    if result == "win":
         print("Hey you won the game!")
-    elif result == loose:
+    elif result == "loose":
         print("...Oh no!\n")
         print("No tries left...\n")
         print("...you killed him!")
@@ -174,7 +182,8 @@ def main():
     while True:
         tries = 0
         hidden_word = get_word()
-        result = get_guess(hidden_word,tries)
+        result = get_guess(hidden_word, tries)
+        print(result)
         if end_game(result):
             break
     print("Thanks for playing!")
