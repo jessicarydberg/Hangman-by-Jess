@@ -77,18 +77,29 @@ def get_guess(word):
     """
     Lets the user make a guess and check if it is valid.
     """
-    guess = input("Insert your guess of caracter of word: ")
-    print(guess)
-    if guess.isalpha():
-        return guess
-    else:
-        print(f"Invalid data: {guess}, please try again.\n")
+    while True:
+        guess = input("Insert your guess of caracter of word: ")
+        if validate_guess(guess, word):
+            break
 
 
-def validate_guess():
+def validate_guess(guess, word):
     """
     Checks if the guess was correct or not.
     """
+    if guess.isalpha():
+        guess = list(guess)
+        print(guess)
+        print(word)
+        print(len(guess), len(word))
+        if len(guess) == 1 or len(guess) == len(word):
+            return True
+        else:
+            print(f"Invalid data: {guess}, please try again.\n")
+            return False  
+    else:
+        print(f"Invalid data: {guess}, please try again.\n")
+        return False
 
 
 def collect_tries():
