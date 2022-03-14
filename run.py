@@ -97,7 +97,7 @@ def get_guess(word, hidden_letters, tries):
     while True:
         guess = input("Please make a guess: ")
         print("\n")
-        if validate_guess(guess, word, hidden_letters):
+        if validate_guess(guess, word, hidden_letters, tries):
             break
     guess = list(guess)
     if guess == word:
@@ -110,7 +110,7 @@ def get_guess(word, hidden_letters, tries):
         collect_tries(tries, word, hidden_letters, guess)
 
 
-def validate_guess(guess, word, hidden_letters):
+def validate_guess(guess, word, hidden_letters, tries):
     """
     Validates the data provided.
     """
@@ -118,7 +118,7 @@ def validate_guess(guess, word, hidden_letters):
         if len(list(guess)) == len(word):
             return True
         elif len(list(guess)) == 1:
-            if guess[0] in hidden_letters:
+            if guess[0] in hidden_letters or guess[0] in tries:
                 print(f'You already guessed for {guess}')
                 print("Please try another guess!")
                 return False
@@ -158,7 +158,7 @@ def collect_tries(tries, word, hidden_letters, guess):
     of the hangman should be displayed.
     """
     print("Oops bad guess...\n")
-    tries.append(guess[0])
+    tries.append(''.join(guess))
     print(tries)
     if len(tries) == 7:
         end_game(LOOSE)
