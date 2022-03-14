@@ -74,7 +74,7 @@ def get_word():
     print("Welcome to the games of HangMan!\n")
     print("Can you guess wich word is hidden?")
     print("You can guess for letters or words but be carefull...")
-    print("Everytime you make an incorrect guess you will get closer to hanging the man...")
+    print("Every incorrect guess takes you close to hanging the man...")
     print(HANGMAN[0])
     print("_" * len(word))
     return word
@@ -91,29 +91,31 @@ def get_guess(word):
             break
     guess = list(guess)
     if guess == word:
-        win_game()
+        return win_game()
     elif guess[0] in word:
-        add_letter(guess, word)
+        return add_letter(guess, word)
     else:
         collect_tries()
-      
+ 
 
 def validate_guess(guess, word):
     """
     Validates the data provided.
     """
     if guess.isalpha():
-        guess = list(guess)
-        print(len(guess), len(word))
-        if len(guess) == len(word):
+        print(len(list(guess)), len(word))
+        if len(list(guess)) == len(word):
             return True
-        elif len(guess) == 1:
+        elif len(list(guess)) == 1:
             return True
         else:
-            print(f"Invalid data: {guess}, please try again.\n")
-            return False 
+            print(f"Invalid data: {guess}.")
+            print(f'Your guess needs to be one letter or {len(word)} letters.')
+            print("Please try again.\n")
+            return False
     else:
-        print(f"Invalid data: {guess}, please try again.\n")
+        print(f"Invalid data: {guess}.")
+        print("Your guess needs to be only letters, please try again.\n")
         return False
 
 
@@ -138,11 +140,21 @@ def win_game():
     the user wants to play again.
     """
     print("Hey you won the game!")
+    while True:
+        play_again = input("Want to play again? (Y/N)")
+        if play_again == "Y":
+            get_word()
+            break
+        elif play_again == "N":
+            break
+        else:
+            print("Invalid input, please insert Y for yes or N for No!")
 
 
 def main():
     hidden_word = get_word()
-    get_guess(hidden_word)
+    value = get_guess(hidden_word)
+    print(value)
 
 
 main()
