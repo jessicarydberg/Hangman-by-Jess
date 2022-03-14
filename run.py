@@ -142,7 +142,7 @@ def add_letter(guess, word, hidden_word, tries):
     """
     print("Good guess!\n")
     if hidden_word == word:
-        print((' '.join(hidden_word)).upper() + "\n")
+        print("The hidden word is: " + (' '.join(word)).upper() + "\n")
         end_game(WIN)
     else:
         for i in range(len(word)):
@@ -151,11 +151,11 @@ def add_letter(guess, word, hidden_word, tries):
     if "_" in hidden_word:
         get_guess(word, hidden_word, tries)
     else:
-        print((' '.join(hidden_word)).upper() + "\n")
+        print("The hidden word is: " + (' '.join(word)).upper() + "\n")
         end_game(WIN)
 
 
-def collect_tries(tries, word, hidden_letters, guess):
+def collect_tries(tries, word, hidden_word, guess):
     """
     Calculate how many tries wich decides wich "image"
     of the hangman should be displayed.
@@ -163,9 +163,10 @@ def collect_tries(tries, word, hidden_letters, guess):
     print("Oops bad guess...\n")
     tries.append(''.join(guess))
     if len(tries) == 7:
+        print("The hidden word is: " + (' '.join(word)).upper() + "\n")
         end_game(LOOSE)
     else:
-        get_guess(word, hidden_letters, tries)
+        get_guess(word, hidden_word, tries)
 
 
 def end_game(result):
