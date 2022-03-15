@@ -237,8 +237,8 @@ def end_game(result):
                 raise ValueError(
                     f'{play} is not a valid input'
                 )
-        except ValueError as e:
-            print(f'{e}. Please answer Yes or No')
+        except ValueError as err:
+            print(f'{err}. Please answer Yes or No')
     if play.lower().startswith('y'):
         print("\nAwesome, lets go!")
         main()
