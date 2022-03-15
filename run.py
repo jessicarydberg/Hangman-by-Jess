@@ -64,8 +64,8 @@ HANGMAN = ["""
 
 def get_word():
     """
-    Creates a list of words and randomly pick and return one
-    of them to play with.
+    Lets the user choose a theme for words to play with.
+    Picks a random word to play with and prepares for the game to start.
     """
     print("\n")
     print("Welcome to the games of HangMan!\n")
@@ -107,7 +107,8 @@ def get_word():
 
 def get_guess(word, hidden_word, tries):
     """
-    Lets the user make a guess and validate it.
+    Lets the user make a guess, validates the input and checks
+    if the guess is correct or not.
     """
     print(HANGMAN[len(tries)])
     print((' '.join(hidden_word)).upper())
@@ -132,7 +133,7 @@ def get_guess(word, hidden_word, tries):
 
 def validate_guess(guess, word, hidden_word, tries):
     """
-    Validates the data provided.
+    Validates the data provided in the input for guessing.
     """
     try:
         if guess.isalpha():
@@ -165,7 +166,7 @@ def validate_guess(guess, word, hidden_word, tries):
 
 def add_letter(guess, word, hidden_word, tries):
     """
-    Collects correct guesses of on letter and ads it to the hidden word.
+    Collects guessed letters that are correct and adds them to the hidden word.
     """
     print("Good guess!\n")
     if hidden_word == word:
@@ -184,8 +185,7 @@ def add_letter(guess, word, hidden_word, tries):
 
 def collect_tries(tries, word, hidden_word, guess):
     """
-    Calculate how many tries wich decides wich "image"
-    of the hangman should be displayed.
+    Collects all incorrect guesses and checks if the user has any tries left.
     """
     print("Oops bad guess...\n")
     tries.append(''.join(guess))
@@ -198,8 +198,8 @@ def collect_tries(tries, word, hidden_word, guess):
 
 def end_game(result):
     """
-    Prints a message depending on if game is lost or won.
-    Gives user oportunity to play again.
+    Prints message to inform if the game was won or lost.
+    Provides a possibility to play again or end the game.
     """
     if result == "win":
         print("Hey you won the game!\n")
@@ -227,9 +227,6 @@ def end_game(result):
 
 
 def main():
-    """
-    main function.
-    """
     tries = []
     word, hidden_word = get_word()
     get_guess(word, hidden_word, tries)
