@@ -76,10 +76,15 @@ def get_word():
     themes = ["animals", "sports", "furniture"]
     while True:
         theme = input("Please enter the theme you would like to play here: ")
-        if theme.lower() in themes:
-            break
-        else:
-            print(f'{theme} is not available, please try again!')
+        try:
+            if theme.lower() in themes:
+                break
+            else:
+                raise ValueError(
+                    f'{theme} is not available'
+                )
+        except ValueError as e:
+            print(f"Invalid input: {e}. Please try again!")
             continue
 
     theme = theme.lower()
@@ -154,7 +159,7 @@ def validate_guess(guess, word, hidden_word, tries):
                 "Your guess needs to contain letters only"
             )
     except ValueError as e:
-        print(f"Invalid data: {e}. Please try again!")
+        print(f"Invalid input: {e}. Please try again!")
         return False
 
     return True
@@ -206,13 +211,17 @@ def end_game(result):
         print("...you killed him!")
         print(HANGMAN[7] + "\n")
     while True:
-        play_again = input("Want to play again? (Y/N)")
-        play_again = play_again.upper()
-        if play_again == "Y" or play_again == "N":
-            break
-        else:
-            print("Invalid input, please insert Y for Yes or N for No!")
-    if play_again == "Y":
+        play = input("Want to play again? (Y/N)")
+        try:
+            if play.upper() == "Y" or play.upper() == "N":
+                break
+            else:
+                raise ValueError(
+                    f'{play}. Please insert Y for Yes or N for No!'
+                )
+        except ValueError as e:
+            print(f'Invalid input: {e}')
+    if play.upper() == "Y":
         main()
     else:
         print("\nThank you for playing!\n")
