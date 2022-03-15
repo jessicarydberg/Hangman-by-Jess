@@ -1,5 +1,6 @@
 import random
 
+
 HANGMAN = ["""
     +-----+
           |
@@ -64,8 +65,13 @@ HANGMAN = ["""
 
 def get_word():
     """
-    Lets the user choose a theme for words to play with.
-    Picks a random word to play with and prepares for the game to start.
+    Welcomes the user and provide information about the game.
+    Lets the user choose between three themes. Run a while loop to
+    collect an input that matches the themes provided. Repeatedly requests 
+    data, until it is valid.
+    
+    Pick a random word to play with from the chosen theme. Create a 
+    "hidden word" with as many blanks as letters in the word to play with.
     """
     print("\n")
     print("Welcome to the games of HangMan!\n")
@@ -107,8 +113,10 @@ def get_word():
 
 def get_guess(word, hidden_word, tries):
     """
-    Lets the user make a guess, validates the input and checks
-    if the guess is correct or not.
+    Lets the user make a guess. Run a while loop to validate the input 
+    with help from validate_guess function. Repeatedly request data, 
+    until it is valid.
+    Then checks if the guess is correct or not.
     """
     print(HANGMAN[len(tries)])
     print((' '.join(hidden_word)).upper())
@@ -134,6 +142,9 @@ def get_guess(word, hidden_word, tries):
 def validate_guess(guess, word, hidden_word, tries):
     """
     Validates the data provided in the input for guessing.
+    Prints error messages if the data contains other symbols then letters.
+    Prints error messages if the amount of letters are other then one or
+    the same as in the word the user is supposed to guess.
     """
     try:
         if guess.isalpha():
@@ -166,16 +177,14 @@ def validate_guess(guess, word, hidden_word, tries):
 
 def add_letter(guess, word, hidden_word, tries):
     """
-    Collects guessed letters that are correct and adds them to the hidden word.
+    Collects all correct guesses at the right place in the hidden word.
+    Checks if there are any blanks left in the hidden word: If there are
+    the game will continue, if not the game is won.
     """
-    print("Good guess!\n")
-    if hidden_word == word:
-        print("The hidden word is: " + (' '.join(word)).upper() + "\n")
-        end_game("win")
-    else:
-        for i in range(len(word)):
-            if word[i] == guess[0]:
-                hidden_word[i] = guess[0]
+    print("Good guess!\n")    
+    for i in range(len(word)):
+        if word[i] == guess[0]:
+            hidden_word[i] = guess[0]
     if "_" in hidden_word:
         get_guess(word, hidden_word, tries)
     else:
@@ -185,7 +194,9 @@ def add_letter(guess, word, hidden_word, tries):
 
 def collect_tries(tries, word, hidden_word, guess):
     """
-    Collects all incorrect guesses and checks if the user has any tries left.
+    Collects all incorrect guesses in a list. Checks if the list contains
+    7 objects wich is the total amount of tries the user has.
+    If the list length is 7 the game is lost, otherwise the game continues.
     """
     print("Oops bad guess...\n")
     tries.append(''.join(guess))
@@ -199,7 +210,9 @@ def collect_tries(tries, word, hidden_word, guess):
 def end_game(result):
     """
     Prints message to inform if the game was won or lost.
-    Provides a possibility to play again or end the game.
+    Asks the user if they want to play again or end the game.
+    Run a while loop to collect a valid input from the user. The answer
+    to the question needs to start with the letter y or n as in Yes or No.
     """
     if result == "win":
         print("Hey you won the game!\n")
@@ -227,6 +240,9 @@ def end_game(result):
 
 
 def main():
+    """
+    Run all functions
+    """
     tries = []
     word, hidden_word = get_word()
     get_guess(word, hidden_word, tries)
