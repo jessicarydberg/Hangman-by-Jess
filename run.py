@@ -78,7 +78,7 @@ def get_word():
     print("You can choose between three themes: Animals, Sports or Furniture")
     themes = ["animals", "sports", "furniture"]
     while True:
-        theme = input("Please enter the theme you would like to play: ")
+        theme = input("Please enter the theme you would like to play: \n")
         try:
             if theme.lower() in themes:
                 break
@@ -86,13 +86,13 @@ def get_word():
                 raise ValueError(
                     f'{theme} is not available'
                 )
-        except ValueError as e:
-            print(f"Invalid input: {e}. Please try again!")
+        except ValueError as err:
+            print(f"Invalid input: {err}. Please try again!")
             continue
 
     theme = theme.lower()
     if theme == "animals":
-        words = "duck dolphine horse lion bird mouse camel".split(" ")
+        words = "duck dolphin horse lion bird mouse camel".split(" ")
     elif theme == "sports":
         words = "football climbing skiing iceskating running".split(" ")
     elif theme == "furniture":
@@ -101,8 +101,8 @@ def get_word():
     word = list(words[number])
 
     print("\n")
-    print("Can you find out wich word that is hidden here?")
-    print("You can guess for letters or words, but be carefull...")
+    print("Can you find out which word that is hidden here?")
+    print("You can guess for letters or words, but be careful...")
     print("...every incorrect guess takes you closer to hanging the man.")
     hidden_word = []
     blank = "_"
@@ -124,7 +124,7 @@ def get_guess(word, hidden_word, tries):
     if len(tries) > 0:
         print("Failed guesses: " + (' '.join(tries)).upper() + "\n")
     while True:
-        guess = input("Please make a guess: ")
+        guess = input("Please make a guess: \n")
         print("\n")
         if validate_guess(guess, word, hidden_word, tries):
             break
@@ -171,8 +171,8 @@ def validate_guess(guess, word, hidden_word, tries):
             raise ValueError(
                 "Your guess needs to contain letters only"
             )
-    except ValueError as e:
-        print(f"Invalid input: {e}. Please try again!")
+    except ValueError as err:
+        print(f"Invalid input: {err}. Please try again!")
         print("\n")
         return False
 
@@ -229,7 +229,7 @@ def end_game(result):
         print(HANGMAN[7] + "\n")
         print("...you killed him!\n")
     while True:
-        play = input("Want to play again? (Yes or No): ")
+        play = input("Want to play again? (Yes or No): \n")
         try:
             if play.lower().startswith('y') or play.lower().startswith('n'):
                 break
