@@ -132,29 +132,32 @@ def validate_guess(guess, word, hidden_word, tries):
     Validates the data provided.
     """
     try:
-        if guess.isalpha() is False:
+        if guess.isalpha():
+            if len(list(guess)) != len(word):
+                if len(list(guess)) != 1:
+                    raise ValueError(
+                        f'Your guess needs to contain 1 letter or\
+                            {len(word)} letters'
+                    )
+            if len(guess) == 1:
+                if guess[0] in hidden_word or guess[0] in tries:
+                    raise ValueError(
+                        f'You already guessed for {guess}'
+                    )
+            if len(guess) == len(word):
+                if (''.join(guess)) in tries:
+                    raise ValueError(
+                        f'You already guessed for {guess}'
+                    )
+        else:
             raise ValueError(
-                "Your guess needs to contain only letters"
+                "Your guess needs to contain letters only"
             )
-        if len(list(guess)) != len(word):
-            if len(list(guess)) != 1:
-                raise ValueError(
-                    f'Your guess needs to contain 1 letter or\
-                        {len(word)} letters'
-                )
-        if len(guess) == 1:
-            if guess[0] in hidden_word or guess[0] in tries:
-                raise ValueError(
-                    f'You already guessed for {guess}'
-                )
-        if len(guess) == len(word):
-            if (''.join(guess)) in word:
-                raise ValueError(
-                    f'You already guessed for {guess}'
-                )
     except ValueError as e:
         print(f"Invalid data: {e}. Please try again!")
-        # return False
+        return False
+
+    return True
 
 
 def add_letter(guess, word, hidden_word, tries):
