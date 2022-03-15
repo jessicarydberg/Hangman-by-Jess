@@ -1,8 +1,5 @@
 import random
 
-WIN = "win"
-LOOSE = "loose"
-
 HANGMAN = ["""
     +---+
         |
@@ -123,7 +120,7 @@ def get_guess(word, hidden_word, tries):
             break
     guess = list(guess)
     if guess == word:
-        end_game(WIN)
+        end_game("win")
     elif len(guess) > 1 and guess != word:
         collect_tries(tries, word, hidden_word, guess)
     elif guess[0] in word:
@@ -172,7 +169,7 @@ def add_letter(guess, word, hidden_word, tries):
     print("Good guess!\n")
     if hidden_word == word:
         print("The hidden word is: " + (' '.join(word)).upper() + "\n")
-        end_game(WIN)
+        end_game("win")
     else:
         for i in range(len(word)):
             if word[i] == guess[0]:
@@ -181,7 +178,7 @@ def add_letter(guess, word, hidden_word, tries):
         get_guess(word, hidden_word, tries)
     else:
         print("The hidden word is: " + (' '.join(word)).upper() + "\n")
-        end_game(WIN)
+        end_game("win")
 
 
 def collect_tries(tries, word, hidden_word, guess):
@@ -193,7 +190,7 @@ def collect_tries(tries, word, hidden_word, guess):
     tries.append(''.join(guess))
     if len(tries) == 7:
         print("The hidden word is: " + (' '.join(word)).upper() + "\n")
-        end_game(LOOSE)
+        end_game("loose")
     else:
         get_guess(word, hidden_word, tries)
 
@@ -222,7 +219,7 @@ def end_game(result):
         except ValueError as e:
             print(f'{e}. Please answer Yes or No')
     if play.lower().startswith('y'):
-        print("\nAwesome, let go!")
+        print("\nAwesome, lets go!")
         main()
     else:
         print("\nThank you for playing!\n")
