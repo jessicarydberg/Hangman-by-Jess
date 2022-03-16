@@ -161,8 +161,7 @@ def validate_guess(list_guess, guess, word, hidden_word, tries):
     except ValueError as err:
         print(HANGMAN[len(tries)])
         print(' '.join(hidden_word) + "\n")
-        print(f"Invalid input: {err}. Please try again!")
-        print("\n")
+        print(f"Invalid input: {err}. Please try again!" + "\n")
         print("Failed guesses: "+(' '.join(tries)).upper())
         return False
 
@@ -265,7 +264,7 @@ def main():
                 elif result == hidden_word:
                     hidden_word = result
                     print(HANGMAN[len(tries)])
-                    print(' '.join(hidden_word))
+                    print(' '.join(hidden_word) + "\n")
                     print(f'Good guess, {guess} is in the word!')
                     print("\n")
                     if len(tries) > 0:

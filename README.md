@@ -1,9 +1,9 @@
-# Hangman
+# Hangman by Jess
 
-Hangman is a Python terminal game, which runs in the Code Institute mock terminal on Heruko.
+Hangman by Jess is a Python terminal game, which runs in the Code Institute mock terminal on Heroku.
 
-The challange is to find out which word is hidden.
-A man will be hanged step by step if you fail.
+The challenge is to find out which word is hidden.
+A man will be changed step by step if you fail.
 
 [Click here for a live version of my project](https://hangman-by-jess.herokuapp.com)
 
@@ -11,9 +11,9 @@ A man will be hanged step by step if you fail.
 
 ## How to play
 
-The game is paysed on a classic game called hangman.
+The game is based on a classic game called hangman.
 
-First the player need to choose a theme for the word that will lead the game.
+First the player needs to choose a theme for the word that will lead the game.
 
 Then the player needs to make guesses to figure out the word. It is possible to guess for the full word but also single letters. If the letter or word guessed is not in the hidden word one more symbol will be displayed on the image of the hanged man. 
 
@@ -96,5 +96,5 @@ This project was deployed using Code Institutes mock terminal for Heruko.
 - Code Institute for the deployment terminal.
 
 Inspiration:
-    - [This youtube tutorial.](https://www.youtube.com/watch?v=m4nEnsavl6w)
-    - [This code.](https://inventwithpython.com/invent4thed/chapter8.html)
+- [This youtube tutorial.](https://www.youtube.com/watch?v=m4nEnsavl6w)
+- [This code.](https://inventwithpython.com/invent4thed/chapter8.html)
