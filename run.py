@@ -266,8 +266,8 @@ def main():
                     hidden_word = result
                     print(HANGMAN[len(tries)])
                     print(' '.join(hidden_word))
-                    print("\n")
                     print(f'Good guess, {guess} is in the word!')
+                    print("\n")
                     if len(tries) > 0:
                         print("Failed guesses: "+(' '.join(tries)).upper())
         if end_game():
