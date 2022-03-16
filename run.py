@@ -73,7 +73,8 @@ def get_word():
     "hidden word" with as many blanks as letters in the word to play with.
     """
     print("\n")
-    print("Welcome to the Hangman game!\n")
+    print("Welcome to Hangman by Jess!\n")
+    print("Lets play!")
     print("You can choose between three themes: Animals, Sports or Furniture")
     themes = ["animals", "sports", "furniture"]
     while True:
