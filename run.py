@@ -74,7 +74,7 @@ def get_word():
     """
     print("\n")
     print("Welcome to Hangman by Jess!\n")
-    print("Lets play!")
+    print("Lets play!\n")
     print("You can choose between three themes: Animals, Sports or Furniture")
     themes = ["animals", "sports", "furniture"]
     while True:
