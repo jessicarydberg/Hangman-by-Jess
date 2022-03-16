@@ -255,6 +255,7 @@ def main():
             elif result == "correct":
                 result = add_letter(guess, word, hidden_word)
                 if result == "win":
+                    print(' '.join(word) + "\n")
                     word = ''.join(word)
                     print("Great guess!")
                     print("Congratulations, you figured it out!\n")
