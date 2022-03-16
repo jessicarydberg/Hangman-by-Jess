@@ -1,66 +1,65 @@
 import random
 
-
 HANGMAN = ["""
-    +-----+
-          |
-          |
-          |
-          |
-          |
-        =====""", """
-    +-----+
-    O     |
-          |
-          |
-          |
-          |
-        =====""", """
-    +----+
-    O    |
-    |    |
-         |
-         |
-         |
-       =====""", """
-    +----+
-    O    |
-   /|    |
-         |
-         |
-         |
-       =====""", """
-    +----+
-    O    |
-   /|\   |
-         |
-         |
-         |
-       =====""", """
-    +----+
-    O    |
-   /|\   |
-    |    |
-         |
-         |
-         |
-       =====""", """
-    +----+
-    O    |
-   /|\   |
-    |    |
-   /     |
-         |
-         |
-       =====""", """
-    +----+
-    O    |
-   /|\   |
-    |    |
-   / \   |
-         |
-         |
-       =====""", ]
+            +------+
+                   |
+                   |
+                   |
+                   |
+                   |
+                 =====""", """
+            +------+
+            O      |
+                   |
+                   |
+                   |
+                   |
+                 =====""", """
+            +------+
+            O      |
+            |      |
+                   |
+                   |
+                   |
+                 =====""", """
+            +------+
+            O      |
+           /|      |
+                   |
+                   |
+                   |
+                 =====""", """
+            +------+
+            O      |
+           /|\     |
+                   |
+                   |
+                   |
+                 =====""", """
+            +------+
+            O      |
+           /|\     |
+            |      |
+                   |
+                   |
+                   |
+                 =====""", """
+            +------+
+            O      |
+           /|\     |
+            |      |
+           /       |
+                   |
+                   |
+                 =====""", """
+            +------+
+            O      |
+           /|\     |
+            |      |
+           / \     |
+                   |
+                   |
+                 =====""", ]
 
 
 def get_word():
@@ -101,11 +100,11 @@ def get_word():
     word = list(words[number].upper())
 
     print("\n")
-    print("Can you find out which word that is hidden here?")
+    print("Can you find out which word is hidden here?")
     print("You can guess for letters or words, but be careful...")
     print("...every incorrect guess takes you closer to hanging the man.")
-    hidden_word = []
     blank = "_"
+    hidden_word = []
     while len(hidden_word) != len(word):
         hidden_word.append(blank)
     return word, hidden_word
@@ -120,6 +119,7 @@ def get_guess(word, hidden_word, tries):
     """
     while True:
         guess = input("Please make a guess: \n").upper()
+        print("\n")
         list_guess = list(guess)
         if validate_guess(list_guess, guess, word, hidden_word, tries):
             break
@@ -162,8 +162,11 @@ def validate_guess(list_guess, guess, word, hidden_word, tries):
                 "Your guess needs to contain letters only"
             )
     except ValueError as err:
+        print(HANGMAN[len(tries)])
+        print(' '.join(hidden_word) + "\n")
         print(f"Invalid input: {err}. Please try again!")
         print("\n")
+        print("Failed guesses: "+(' '.join(tries)).upper()+"\n")
         return False
 
     return True
@@ -232,6 +235,7 @@ def main():
         word, hidden_word = get_word()
         print(HANGMAN[len(tries)])
         print(' '.join(hidden_word))
+        print("\n")
         while True:
             guess, result = get_guess(word, hidden_word, tries)
             if result == "win":
@@ -244,6 +248,7 @@ def main():
                 if result == "loose":
                     print(HANGMAN[7] + "\n")
                     print("To bad! " + f'{guess} is not in the word')
+                    print("\n")
                     print("The hidden word is: " + (' '.join(word)) + "\n")
                     print("No tries left...\n")
                     print("...you killed him!\n")
@@ -251,9 +256,9 @@ def main():
                 elif result == tries:
                     tries = result
                     print(HANGMAN[len(tries)])
-                    print(' '.join(hidden_word))
-                    print("To bad! " + f'{guess} is not in the word')
-                    print("Failed guesses: " + (' '.join(tries)).upper())    
+                    print(' '.join(hidden_word) + "\n")
+                    print("To bad! " + f'{guess} is not in the word' + "\n")
+                    print("Failed guesses: "+(' '.join(tries)).upper()+"\n")   
             elif result == "correct":
                 result = add_letter(guess, word, hidden_word)
                 if result == "win":
@@ -264,15 +269,18 @@ def main():
                     break
                 elif result == hidden_word:
                     hidden_word = result
-                    print(' '.join(hidden_word) + HANGMAN[len(tries)])
+                    print(HANGMAN[len(tries)])
+                    print(' '.join(hidden_word))
+                    print("\n")
                     print(f'Good guess, {guess} is in the word!')
                     if len(tries) > 0:
                         print("Failed guesses: "+(' '.join(tries)).upper())
+                        print("\n")
             else:
                 print("Something went wrong here")
 
         if end_game():
             break
-                
+
 
 main()
