@@ -118,25 +118,19 @@ def get_guess(word, hidden_word, tries):
     until it is valid.
     Then checks if the guess is correct or not.
     """
-    print("\n")
-    if len(tries) > 0:
-        print("Failed guesses: " + (' '.join(tries)).upper() + "\n")
     while True:
         guess = input("Please make a guess: \n").upper()
-        print("\n")
         list_guess = list(guess)
         if validate_guess(list_guess, guess, word, hidden_word, tries):
             break
     if list_guess == word:
-        print("\n")
-        print(f'Good guess! {guess.upper()} is the word')
-        end_game("win")
+        return guess, "win"
     elif len(list_guess) > 1 and list_guess != word:
-        collect_tries(tries, word, hidden_word, guess)
+        return guess, "fail"
     elif guess in word:
-        add_letter(guess, word, hidden_word, tries)
+        return guess, "correct"
     else:
-        collect_tries(tries, word, hidden_word, guess)
+        return guess, "fail"
 
 
 def validate_guess(list_guess, guess, word, hidden_word, tries):
@@ -151,8 +145,7 @@ def validate_guess(list_guess, guess, word, hidden_word, tries):
             if len(list_guess) != len(word):
                 if len(list_guess) != 1:
                     raise ValueError(
-                        f'Your guess needs to contain 1 letter or\
-                            {len(word)} letters'
+                        f'Your guess needs to contain 1 or {len(word)} letters'
                     )
             if len(list_guess) == 1:
                 if guess in hidden_word or guess in tries:
@@ -176,7 +169,7 @@ def validate_guess(list_guess, guess, word, hidden_word, tries):
     return True
 
 
-def add_letter(guess, word, hidden_word, tries):
+def add_letter(guess, word, hidden_word):
     """
     Collects all correct guesses at the right place in the hidden word.
     Checks if there are any blanks left in the hidden word: If there are
@@ -186,43 +179,31 @@ def add_letter(guess, word, hidden_word, tries):
         if word[i] == guess:
             hidden_word[i] = guess
     if "_" in hidden_word:
-        get_guess(word, hidden_word, tries)
+        return hidden_word
     else:
-        print("\n")
-        print("The hidden word is: " + (' '.join(word)) + "\n")
-        end_game("win")
+        return "win"
 
 
-def collect_tries(tries, word, hidden_word, guess):
+def collect_tries(tries, guess):
     """
     Collects all incorrect guesses in a list. Checks if the list contains
     7 objects wich is the total amount of tries the user has.
     If the list length is 7 the game is lost, otherwise the game continues.
     """
-    print("To bad! " + f'{guess} is not in the word')
     tries.append(guess)
-    print(tries)
     if len(tries) == 7:
-        print("\n")
-        print("The hidden word is: " + (' '.join(word)) + "\n")
-        end_game("loose")
+        return "loose"
     else:
-        get_guess(word, hidden_word, tries)
+        return tries
 
 
-def end_game(result):
+def end_game():
     """
     Prints message to inform if the game was won or lost.
     Asks the user if they want to play again or end the game.
     Run a while loop to collect a valid input from the user. The answer
     to the question needs to start with the letter y or n as in Yes or No.
     """
-    if result == "win":
-        print("Congratulations, you figured it out!\n")
-    else:
-        print("No tries left...\n")
-        print(HANGMAN[7] + "\n")
-        print("...you killed him!\n")
     while True:
         play = input("Want to play again? (Yes or No): \n")
         try:
@@ -236,20 +217,62 @@ def end_game(result):
             print(f'{err}. Please answer Yes or No')
     if play.lower().startswith('y'):
         print("\nAwesome, lets go!")
-        main()
+        return False
     else:
         print("\nThank you for playing!\n")
+        return True
 
 
 def main():
     """
     Run all functions
     """
-    tries = []
-    word, hidden_word = get_word()
-    print(HANGMAN[len(tries)])
-    print(' '.join(hidden_word))
-    get_guess(word, hidden_word, tries)
+    while True:
+        tries = []
+        word, hidden_word = get_word()
+        print(HANGMAN[len(tries)])
+        print(' '.join(hidden_word))
+        while True:
+            guess, result = get_guess(word, hidden_word, tries)
+            if result == "win":
+                word = ''.join(word)
+                print("Congratulations, you figured it out!\n")
+                print(f'{word} is the word')
+                break
+            elif result == "fail":
+                result = collect_tries(tries, guess)
+                if result == "loose":
+                    print(HANGMAN[7] + "\n")
+                    print("To bad! " + f'{guess} is not in the word')
+                    print("The hidden word is: " + (' '.join(word)) + "\n")
+                    print("No tries left...\n")
+                    print("...you killed him!\n")
+                    break
+                elif result == tries:
+                    tries = result
+                    print(HANGMAN[len(tries)])
+                    print(' '.join(hidden_word))
+                    print("To bad! " + f'{guess} is not in the word')
+                    print("Failed guesses: " + (' '.join(tries)).upper())    
+            elif result == "correct":
+                result = add_letter(guess, word, hidden_word)
+                if result == "win":
+                    word = ''.join(word)
+                    print("Great guess!")
+                    print("Congratulations, you figured it out!\n")
+                    print(f'{word} is the word')
+                    break
+                elif result == hidden_word:
+                    hidden_word = result
+                    print(' '.join(hidden_word) + HANGMAN[len(tries)])
+                    print(f'Good guess, {guess} is in the word!')
+                    if len(tries) > 0:
+                        print("Failed guesses: "+(' '.join(tries)).upper())
+            else:
+                print("Something went wrong here")
 
+        if end_game():
+            break
+                
 
 main()
