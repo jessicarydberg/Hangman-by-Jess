@@ -28,7 +28,7 @@ After 7 incorrect guesses the hangman image is fully displayed and the game is l
 ## Features
 
 - Display images
-- Display blanks as "hidden word"
+- Display underscores as "Hidden word"
 ![printscreen of game board beginning](/assets/images/beginning.jpg)
 - Accepts user input
     - choosing theme.
@@ -49,7 +49,9 @@ After 7 incorrect guesses the hangman image is fully displayed and the game is l
 ![printscreen of invalid input](/assets/images/error.jpg)
 ![printscreen of invalid input](/assets/images/error-2.jpg)
 ### Future features
-- Possibility to choose level
+
+- Possibility to choose level.
+- Maintain points for how many times the player guessed the right word without hanging the man.
 
 ## Testing
 
