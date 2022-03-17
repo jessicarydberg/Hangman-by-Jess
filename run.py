@@ -199,14 +199,24 @@ def collect_tries(tries, guess):
         return tries
 
 
-def end_game():
+def end_game(saved, killed):
     """
     Run a while loop asking the user if they want to play again. Repeatedly
     request data until it is valid.
     Ends game or returns to get_word depending on the input.
     """
+    if saved == 1:
+        print("You have managed to save 1 man")
+    else:
+        print(f'You have managed to save {saved} men')
+    if killed == 1:
+        print("and kill 1 man.")
+        print("\n")
+    else:
+        print(f'and kill {killed} men.')
+        print("\n")
     while True:
-        play = input("Do you want to play again? (Yes or No): \n")
+        play = input("Do you want to try again? (Yes or No): \n")
         try:
             if play.lower().startswith('y') or play.lower().startswith('n'):
                 break
@@ -228,11 +238,13 @@ def main():
     """
     Run all functions and print appropriate messages.
 
-    Run all functions and print appropriate messages in a while loop that 
+    Run all functions and print appropriate messages in a while loop that
     breaks at the end of the game if the player doesn't want to play again.
     Run another while loop inside of this. Repeatedly requests for
     guesses and breaks when the game is won or lost.
     """
+    saved = 0
+    killed = 0
     while True:
         tries = []
         word, hidden_word = get_word()
@@ -249,6 +261,7 @@ def main():
                     print("The hidden word is: " + (' '.join(word)) + "\n")
                     print("No tries left...\n")
                     print("...you killed him!\n")
+                    killed += 1
                     break
                 elif result == tries:
                     tries = result
@@ -264,6 +277,7 @@ def main():
                     print("Great guess!")
                     print("Congratulations, you figured it out!\n")
                     print(f'{word} is the word' + "\n")
+                    saved += 1
                     break
                 elif result == hidden_word:
                     hidden_word = result
@@ -272,7 +286,7 @@ def main():
                     print(f'Good guess, {guess} is in the word.' + "\n")
                     if len(tries) > 0:
                         print("Failed guesses: "+(' '.join(tries)).upper())
-        if end_game():
+        if end_game(saved, killed):
             break
 
 
