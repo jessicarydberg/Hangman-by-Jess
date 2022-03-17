@@ -3,7 +3,7 @@
 Hangman by Jess is a Python terminal game, which runs in the Code Institute mock terminal on Heroku.
 
 The challenge is to find out which word is hidden.
-A man will be changed step by step if you fail.
+A man will be hanged step by step if you fail.
 
 [Click here for a live version of my project](https://hangman-by-jess.herokuapp.com)
 
