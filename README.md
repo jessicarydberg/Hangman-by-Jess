@@ -29,29 +29,38 @@ After 7 incorrect guesses the hangman image is fully displayed and the game is l
 
 - Display images
 - Display underscores as "Hidden word"
+
 ![printscreen of game board beginning](/assets/images/beginning.jpg)
+
 - Accepts user input
     - choosing theme.
     - making guesses.
     - play again.
-![printscreen of winning](/assets/images/win.jpg)
+- Maintain scores.
+
+![printscreen of winning and score count](/assets/images/score-count.jpg)
+
 - Random word generation
     - Gets a random word matching the theme.
 - maintain amount of tries
 - maintain correct guesses
+
 ![printscreen of game board](/assets/images/maintain-guess.jpg)
+
 - Input validation and error checking
     - You cannot enter the same guess twice.
     - You cannot guess for other symbols then letters.
     - You cannot guess for words longer or shorter than the played word.
     - You cannot choose a theme that is not available.
     - You cannot answer to play again with words that doesn't start with the letters y or n.
+
 ![printscreen of invalid input](/assets/images/error.jpg)
+
 ![printscreen of invalid input](/assets/images/error-2.jpg)
+
 ### Future features
 
-- Possibility to choose level.
-- Maintain points for how many times the player guessed the right word without hanging the man.
+- Posibility to choose level.
 
 ## Testing
 
